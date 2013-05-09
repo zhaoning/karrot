@@ -1,17 +1,23 @@
-%let karrot_dir=Y:\Documents\家庭财务\Karrot;
-libname karrot "&karrot_dir";
-
-%let history_citic=&karrot_dir\投资数据备份\交易备份-中信证券赵宁.csv;
-%let history_cmb=&karrot_dir\投资数据备份\交易备份-招行理财赵宁.csv;
-%let history_cmbfd=&karrot_dir\投资数据备份\交易备份-招行基金赵宁.csv;
-%let asset_price=&karrot_dir\投资数据备份\资产价格-历史价格表.csv;
-%let asset_properties=&karrot_dir\投资数据备份\资产属性-基本属性.csv;
-
 options mprint;
 
-%include "Y:\CodeLib\dt.sas";
-%include "Y:\CodeLib\str.sas";
-%include "Y:\CodeLib\fmt.sas";
+proc sort data=sashelp.vextfl out=temp;
+	where substrn(fileref,1,3)='#LN' and index(lowcase(xpath),'.sas')>0;
+	by descending fileref;
+data _null_;
+	set temp(obs=1);
+	lastbs=length(xpath)-length(scan(xpath,-1,'\'));
+	call symput('karrot_dir',substrn(xpath,1,lastbs-1));
+run;
+
+libname karrot "&karrot_dir";
+
+%let history_citic=&karrot_dir\raw\History-CITIC_ZN.csv;
+%let history_cmb=&karrot_dir\raw\History-CMB_ZN.csv;
+%let history_cmbfd=&karrot_dir\raw\History-CMBFD_ZN.csv;
+%let asset_price=&karrot_dir\raw\Asset Price-History.csv;
+%let asset_properties=&karrot_dir\raw\Asset Properties-Basic.csv;
+
+%include "Y:\CodeLib\sas_utils\all.sas";
 
 %include "&karrot_dir\Macros.sas";
 %include "&karrot_dir\Formats.sas";
