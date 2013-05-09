@@ -1,8 +1,5 @@
-
 *.html
-
 *.sas7bdat
-
 *.csv
-
 *.sas7bcat
+*.DS_Store
