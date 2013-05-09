@@ -25,6 +25,7 @@ data karrot.history_citic;
 		comments $20
 		comments2 $20
 		trn_time_txt $10
+		man_tag $1
 	;
 	infile "&history_citic" dlm=',' dsd firstobs=2;
 	informat trn_date dlc_date yymmdd8.;
@@ -52,6 +53,7 @@ data karrot.history_citic;
 		xch_name
 		comments
 		comments2
+		man_tag
 	;
 
 	* trn_time;
@@ -98,6 +100,8 @@ data trn_citic_temp;
 	end;
 
 	trd_expense=abs(abs(trd_amount)-abs(settlement));
+
+	if man_tag='D' then delete;
 run;
 
 data trn_citic;

@@ -15,6 +15,7 @@ data karrot.history_cmb;
 		commission 8
 		contract_no $10
 		comments $10
+		man_tag $1
 	;
 	infile "&history_cmb" dlm=',' dsd firstobs=2;
 	informat trn_date yymmdd10.;
@@ -33,6 +34,7 @@ data karrot.history_cmb;
 		commission
 		contract_no
 		comments
+		man_tag
 	;
 run;
 
@@ -69,6 +71,8 @@ data trn_cmb_temp;
 	end;
 
 	trd_expense=abs(abs(trd_amount)-abs(settlement));
+
+	if man_tag='D' then delete;
 run;
 
 data trn_cmb;

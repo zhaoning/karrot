@@ -17,6 +17,7 @@ data karrot.history_cmbfd;
 		status $10
 		comments $10
 		comments2 $10
+		man_tag $1
 	;
 	infile "&history_cmbfd" dlm=',' dsd firstobs=2;
 	informat trn_date yymmdd10.;
@@ -37,6 +38,7 @@ data karrot.history_cmbfd;
 		status
 		comments
 		comments2
+		man_tag
 	;
 run;
 
@@ -86,6 +88,8 @@ data trn_cmbfd_temp;
 	end;
 
 	trd_amount=abs(abs(settlement)-abs(trd_expense));
+
+	if man_tag='D' then delete;
 run;
 
 data trn_cmbfd;
