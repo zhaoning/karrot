@@ -129,6 +129,9 @@ run;
 	%let out=portfolio;
 %end;
 
+data &out;
+run;
+
 * List relevant securities and date/time;
 proc freq data=karrot.transactions noprint;
 	tables %dtdlm(&class,%str(*))
@@ -258,6 +261,9 @@ quit;
 %if &out= %then %do;
 	%let out=money_weighted_return;
 %end;
+
+data &out;
+run;
 
 %portfolio(&report_from,&class,from)
 %portfolio(&report_to,&class,to)
