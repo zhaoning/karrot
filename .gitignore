@@ -3,3 +3,4 @@
 *.csv
 *.sas7bcat
 .DS_Store
+*.numbers
